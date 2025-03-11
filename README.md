@@ -4,9 +4,7 @@
 
 # Instalação
 
-- instalar o NVM for Windows
-
-link: https://github.com/coreybutler/nvm-windows/releases/download/1.2.2/nvm-setup.exe
+- instalar o NVM for Windows [aqui](https://github.com/coreybutler/nvm-windows/releases/download/1.2.2/nvm-setup.exe)
 
 - instalar o node e npm
 ```
