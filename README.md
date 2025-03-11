@@ -10,25 +10,25 @@ link: https://github.com/coreybutler/nvm-windows/releases/download/1.2.2/nvm-set
 
 - instalar o node e npm
 ```
-$ nvm install latest
+nvm install latest
 ```
   ativar o node
 ```
-$ nvm use latest
+nvm use latest
 ```
 - clone este repositório com https ou ssh
 
 - navegue até a pasta do repositório e instale as dependências
 ```
-$ npm install
+npm install
 ```
 - instale os navegadores do playwright
 ```
-$ npx playwright install
+npx playwright install
 ```
 # Utilização
 
 na pasta clonada utilize
 ```
-$ node ./scripts/nomedoscript.js
+node ./scripts/nomedoscript.js
 ```
