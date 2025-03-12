@@ -43,7 +43,7 @@ informe IP, usuario, senha, Ramal a se começar e Ramal onde terminar a criaçã
 node ./scripts/cadastroCallback.js
 ```
 
-será necessario fornecer um arquivo chamado callback.csv, o arquivo deve estar com a seguinte estrutura:
+será necessario fornecer um arquivo chamado callback.csv, coloque-o em scripts/import, o arquivo deve estar com a seguinte estrutura:
 ```
 Nome,Ramal
 Exemplo1,200
