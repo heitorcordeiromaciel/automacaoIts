@@ -28,9 +28,26 @@ npx playwright install
 ```
 # Utilização
 
-- para os scripts relacionados a Issabel, primeiro configure o idioma do Issabel para Português (Brasil)
+_**para os scripts relacionados a Issabel, primeiro configure o idioma do Issabel para Português (Brasil)**_
+
+- Criador de Ramal
 
 na pasta clonada utilize
 ```
-node ./scripts/nomedoscript.js
+node ./scripts/criadorDeRamal.js
 ```
+informe IP, usuario, senha, Ramal a se começar e Ramal onde terminar a criação, o script irá realizar a criação automaticamente, pulando ramais que ja existam para evitar erros.
+
+- Script de cadastro de Callback
+```
+node ./scripts/cadastroCallback.js
+```
+
+será necessario fornecer um arquivo chamado callback.csv, o arquivo deve estar com a seguinte estrutura:
+```
+Nome,Ramal
+Exemplo1,200
+Exemplo2,201
+```
+
+o script irá iterar pelas linhas do arquivo criando o callback e atribuindo o ramal ao nome, a senha será sempre a mesma que o ramal.
