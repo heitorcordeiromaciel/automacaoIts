@@ -1,6 +1,6 @@
 # Compilado de scripts de automação para a equipe de TI da ITS
 - Criador de ramal automatico para PBX Issabel
-- Script de cadastro de callback automatico (em desenvolvimento)
+- Script de cadastro de callback automatico (_Beta_)
 - Scripts ja existentes serão enviados ao repositório conforme eu for encontrando eles
 
 # Instalação
