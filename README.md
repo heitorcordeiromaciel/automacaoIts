@@ -26,6 +26,8 @@ npx playwright install
 ```
 # Utilização
 
+- para os scripts relacionados a Issabel, primeiro configure o idioma do Issabel para Português (Brasil)
+
 na pasta clonada utilize
 ```
 node ./scripts/nomedoscript.js
