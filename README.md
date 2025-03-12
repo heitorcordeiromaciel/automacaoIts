@@ -1,8 +1,11 @@
 # Compilado de scripts de automação para a equipe de TI da ITS
 - Criador de ramal automatico para PBX Issabel
 - Script de cadastro de callback automatico (_Beta_)
-- Scripts ja existentes serão enviados ao repositório conforme eu for encontrando eles
+- Script para limpar Voicemail Prodemge
+- Script para checar backups no 31
+- Script para realizar o backup dos PFSenses (em Desenvolvimento)
 
+_Obrigado Gabriel pelo codigo original do voicemail e 31_
 # Instalação
 
 - instalar o NVM for Windows [aqui](https://github.com/coreybutler/nvm-windows/releases/download/1.2.2/nvm-setup.exe)
