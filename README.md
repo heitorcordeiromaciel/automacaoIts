@@ -3,7 +3,8 @@
 - Script de cadastro de callback automatico (_Beta_)
 - Script para limpar Voicemail Prodemge
 - Script para checar backups no 31
-- Script para realizar o backup dos PFSenses
+- Script para realizar o backup dos pFsenses
+- Script para verificar links de internet nos pfSenses
 
 _Obrigado Gabriel pelo codigo original do voicemail e 31_
 # Instalação
