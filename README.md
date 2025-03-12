@@ -14,7 +14,8 @@ nvm install latest
 ```
 nvm use latest
 ```
-  clone este repositório com https ou ssh (alternativamente pode fazer o download do repositório compactado e extrair)
+  clone este repositório com https ou ssh
+  (alternativamente pode fazer o download do repositório compactado e extrair, se feito dessa maneira é necessario realizar o download novamente a cada release novo)
 
   navegue até a pasta do repositório e instale as dependências
 ```
