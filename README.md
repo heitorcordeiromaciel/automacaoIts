@@ -6,7 +6,7 @@
 - Script para realizar o backup dos pFsenses
 - Script para verificar links de internet nos pfSenses
 
-_Obrigado Gabriel pelo codigo original do voicemail e 31_
+_Obrigado Gabriel pelo codigo original do voicemail, 31 e links pFsenses_
 # Instalação
 
 - instalar o NVM for Windows [aqui](https://github.com/coreybutler/nvm-windows/releases/download/1.2.2/nvm-setup.exe)
