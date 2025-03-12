@@ -51,3 +51,5 @@ Exemplo2,201
 ```
 
 o script irá iterar pelas linhas do arquivo criando o callback e atribuindo o ramal ao nome, a senha será sempre a mesma que o ramal.
+
+_PS: O script de cadastro de callback ainda é instavel, as vezes ele 1-2 usuarios durante o cadastro, após utilização é bom verificar se tudo está correto_
