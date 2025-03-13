@@ -3,7 +3,6 @@ const fs = require('fs');
 const colors = require('chalk');
 const { exec } = require('child_process');
 
-// Define your data (the same structure as before)
 const dados = [
   {
     pfsense: "PFSENSE SEDE",
@@ -39,7 +38,6 @@ const dados = [
   },
 ];
 
-// Function to run the Playwright script
 async function runPlaywrightScript() {
   const browser = await webkit.launch();
   const context = await browser.newContext({ ignoreHTTPSErrors: true });
@@ -62,18 +60,16 @@ async function runPlaywrightScript() {
     await page.locator('input[name="login"]').click();
 
     await page.waitForTimeout(2000);
-    await checkStatus(page, result, dado.pfsense);  // Pass the pfsense name
+    await checkStatus(page, result, dado.pfsense);
   }
 
   await browser.close();
 
-  // Save the result as a JSON file
   fs.writeFileSync('gateway_status.json', JSON.stringify(result, null, 2));
 
   console.log('Updated gateway_status.json');
 }
 
-// Function to check gateway status
 async function checkStatus(page, result, pfsenseName) {
   for (let i = 0; i < 5; i++) {
     const rows = await page.$$(`#gateways-${i}-gwtblbody > tr`);
@@ -108,7 +104,7 @@ async function checkStatus(page, result, pfsenseName) {
         }
       }
 
-      result.push(pfsenseData);  // Add the pfsense data with its gateways
+      result.push(pfsenseData); 
       break;
     }
   }
@@ -132,6 +128,6 @@ app.get('/gateway_status', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  console.log(`Dashboard hospedado em: http://localhost:${port}`);
   scheduleScriptRun();
 });
