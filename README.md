@@ -11,7 +11,7 @@
 _Obrigado Gabriel pelo codigo original do voicemail, 31, links pFsenses e VPN Blumenau_
 # Executaveis
 
-`criadorDeRamal`, `pfsenses`, e `clearVoicemail` possuem versões .exe que podem ser encontradas na pasta `exe`
+`criadorDeRamal`, `pfsenses`, `clearVoicemail` e `troncoFiesc` possuem versões .exe que podem ser encontradas na pasta `exe`
 
 # Instalação
 
