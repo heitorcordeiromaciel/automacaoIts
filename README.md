@@ -7,6 +7,10 @@
 - Script para verificar links de internet nos pfSenses
 
 _Obrigado Gabriel pelo codigo original do voicemail, 31 e links pFsenses_
+# Executaveis
+
+`criadorDeRamal`, `pfsenses`, e `clearVoicemail` possuem versões .exe que podem ser encontradas na pasta `exe`
+
 # Instalação
 
 - instalar o NVM for Windows [aqui](https://github.com/coreybutler/nvm-windows/releases/download/1.2.2/nvm-setup.exe)

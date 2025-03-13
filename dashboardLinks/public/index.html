@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gateway Status Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-  
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -17,35 +18,34 @@
       padding: 20px;
       font-family: 'Roboto', sans-serif;
       overflow-y: hidden;
-      padding-top: 70px; /* Added padding to prevent overlap with fixed header */
+      padding-top: 70px;
     }
-  
+
     .pfsense-card {
-      background-color: #34495e;  /* Slightly lighter grayish blue for the card */
+      background-color: #34495e;
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
       margin: 10px;
       padding: 20px;
       width: 300px;
     }
-  
+
     .pfsense-title {
       font-size: 1.5rem;
-      color: #e67e22;  /* Orange for pfsense names */
+      color: #e67e22;
       margin-bottom: 10px;
       text-align: center;
       font-weight: bold;
     }
-  
-    /* Title of the dashboard in orange */
+
     .dashboard-title {
       font-size: 2rem;
       text-align: center;
       margin-bottom: 20px;
-      color: #e67e22;  /* Orange */
+      color: #e67e22;
       font-weight: bold;
     }
-  
+
     .gateway-status {
       margin: 10px 0;
       padding: 10px;
@@ -54,25 +54,26 @@
       text-align: center;
       transition: background-color 0.3s ease-in-out;
     }
-  
+
     .online {
       background-color: #28a745;
       color: white;
     }
-  
+
     .offline {
       background-color: #dc3545;
       color: white;
     }
-  
+
     .unknown {
       background-color: #ffc107;
       color: black;
     }
-  
+
     .status-container {
       margin-top: 15px;
     }
+
     header {
       position: fixed;
       top: 0;
@@ -85,14 +86,13 @@
       font-size: 1.25rem;
       z-index: 9999;
     }
-  
-    /* Responsive layout */
+
     @media (max-width: 768px) {
       .pfsense-card {
         width: 45%;
       }
     }
-  
+
     @media (max-width: 480px) {
       .pfsense-card {
         width: 100%;
@@ -100,24 +100,23 @@
     }
   </style>
 </head>
+
 <body>
-    <header><strong>Gateway Status Dashboard</strong></header>
+  <header><strong>Gateway Status Dashboard</strong></header>
   <div id="statusContainer" style="width: 100%; display: flex; flex-wrap: wrap; justify-content: space-around;"></div>
 
   <script>
-    // Function to fetch and update the status every 2 seconds
     async function fetchGatewayStatus() {
       const response = await fetch('/gateway_status');
       const data = await response.json();
       const statusContainer = document.getElementById('statusContainer');
 
-      statusContainer.innerHTML = ''; // Clear previous status
+      statusContainer.innerHTML = '';
 
       data.forEach(pfsenseData => {
         const pfsenseCard = document.createElement('div');
         pfsenseCard.classList.add('pfsense-card');
 
-        // Create pfsense title
         const pfsenseTitle = document.createElement('div');
         pfsenseTitle.classList.add('pfsense-title');
         pfsenseTitle.innerText = pfsenseData.pfsense;
@@ -125,10 +124,9 @@
         const gatewaysContainer = document.createElement('div');
         gatewaysContainer.classList.add('status-container');
 
-        // Iterate over gateways and display each status
         pfsenseData.gateways.forEach(gateway => {
           const statusClass = gateway.status === 'ONLINE' ? 'online' :
-                              gateway.status === 'OFFLINE' ? 'offline' : 'unknown';
+            gateway.status === 'OFFLINE' ? 'offline' : 'unknown';
 
           const gatewayDiv = document.createElement('div');
           gatewayDiv.classList.add('gateway-status', statusClass);
@@ -140,14 +138,12 @@
         pfsenseCard.appendChild(pfsenseTitle);
         pfsenseCard.appendChild(gatewaysContainer);
 
-        // Add the card to the main container
         statusContainer.appendChild(pfsenseCard);
       });
     }
 
-    // Update the dashboard every 2 seconds
     setInterval(fetchGatewayStatus, 2000);
-    fetchGatewayStatus(); // Initial fetch
+    fetchGatewayStatus();
   </script>
 </body>
 </html>
