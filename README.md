@@ -5,11 +5,13 @@
 - Script para checar backups no 31
 - Script para realizar o backup dos pFsenses
 - Script para verificar links de internet nos pfSenses
+- Script para reiniciar tronco na FIESC
+- Script para reconectar VPN de Blumenau automaticamente baseado em horario
 
-_Obrigado Gabriel pelo codigo original do voicemail, 31 e links pFsenses_
+_Obrigado Gabriel pelo codigo original do voicemail, 31, links pFsenses e VPN Blumenau_
 # Executaveis
 
-`criadorDeRamal`, `pfsenses`, e `clearVoicemail` possuem versões .exe que podem ser encontradas na pasta `exe`
+`criadorDeRamal`, `pfsenses`, `clearVoicemail` e `troncoFiesc` possuem versões .exe que podem ser encontradas na pasta `exe`
 
 # Instalação
 
@@ -60,7 +62,7 @@ Exemplo2,201
 
 o script irá iterar pelas linhas do arquivo criando o callback e atribuindo o ramal ao nome, a senha será sempre a mesma que o ramal.
 
-_PS: O script de cadastro de callback ainda é instavel, as vezes ele 1-2 usuarios durante o cadastro, após utilização é bom verificar se tudo está correto_
+_PS: O script de cadastro de callback ainda é instavel, as vezes ele come 1-2 usuarios durante o cadastro, após utilização é bom verificar se tudo está correto_
 
 - Todos os outros scripts é apenas necessario rodar o codigo
 ```
