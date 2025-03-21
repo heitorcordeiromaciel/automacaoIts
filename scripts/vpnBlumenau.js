@@ -19,6 +19,7 @@ const { webkit } = require('playwright');
     await page.locator('[href="/status_ipsec.php"]').click();
     await page.waitForTimeout(500);
     await page.screenshot({ path: './screenshots/test.png' });
+    page.on('dialog', dialog => dialog.accept());
     const rowLocator = page.locator(`tbody#ipsec-body tr:has(td:nth-child(2):text("SERASA-ALGAR"))`);
     await rowLocator.locator('a[title="Disconnect P1"]').click();
     console.log('VPN Reiniciada');

@@ -41,7 +41,6 @@ let outputData = {};
 		await checkStatus(page, outputData[dado.pfsense].gateways);
 	}
 
-	// Save structured data to JSON file
 	fs.writeFileSync("gateway_status.json", JSON.stringify(outputData, null, 2));
 	console.log(colors.yellow("Status saved to gateway_status.json"));
 
