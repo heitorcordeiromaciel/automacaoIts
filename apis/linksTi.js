@@ -110,7 +110,7 @@ async function checkStatus(page, result, pfsenseName) {
   }
 }
 
-function scheduleScriptRun() {
+function linksti() {
   runPlaywrightScript();
 
   setInterval(() => {
@@ -118,16 +118,4 @@ function scheduleScriptRun() {
   }, 2 * 60 * 60 * 1000);
 }
 
-const express = require('express');
-const app = express();
-const port = 8080;
-
-app.use(express.static('public'));
-app.get('/gateway_status', (req, res) => {
-  res.sendFile(__dirname + '/gateway_status.json');
-});
-
-app.listen(port, () => {
-  console.log(`Dashboard hospedado em: http://localhost:${port}`);
-  scheduleScriptRun();
-});
+module.exports.linksti = linksti

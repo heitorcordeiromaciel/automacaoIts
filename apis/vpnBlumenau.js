@@ -1,10 +1,6 @@
-const express = require('express');
 const { webkit } = require('playwright');
 
-const app = express();
-const PORT = 8080;
-
-async function runScript() {
+async function restartVpn() {
     try {
         console.log("Iniciando aplicação...");
         const browser = await webkit.launch();
@@ -42,12 +38,4 @@ async function runScript() {
     }
 }
 
-app.get('/run-script', async (req, res) => {
-    const result = await runScript();
-    res.json(result);
-});
-
-app.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
-    console.log(`Chame http://localhost:${PORT}/run-script para rodar o script`);
-});
+module.exports.restartVpn = restartVpn
