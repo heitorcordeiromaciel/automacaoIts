@@ -24,8 +24,10 @@ const addCampaign = async () => {
         await page.waitForTimeout(500);
 
         await browser.close();
-    } catch (e) {
-        throw e;
+        return { success: true, message: "Script executado com sucesso" };
+    } catch (error) {
+        console.error("Erro na execução do script:", error);
+        return { success: false, message: "Erro ao executar o script" };
     }
 }
 
