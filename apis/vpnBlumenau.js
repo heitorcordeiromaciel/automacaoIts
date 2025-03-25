@@ -48,6 +48,5 @@ async function restartVpn() {
         return { success: false, message: "Erro ao executar o script" };
     }
 }
-restartVpn();
 
 module.exports.restartVpn = restartVpn
