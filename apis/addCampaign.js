@@ -1,8 +1,8 @@
-const { webkit } = require('playwright');
+const { chromium } = require('playwright');
 
 const addCampaign = async () => {
     try {
-        const browser = await webkit.launch();
+        const browser = await chromium.launch();
         const context = await browser.newContext({ ignoreHTTPSErrors: true });
         const page = await context.newPage();
 

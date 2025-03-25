@@ -1,4 +1,4 @@
-const { webkit } = require('playwright');
+const { chromium } = require('playwright');
 const fs = require('fs');
 const colors = require('chalk');
 const { exec } = require('child_process');
@@ -39,7 +39,7 @@ const dados = [
 ];
 
 async function runPlaywrightScript() {
-  const browser = await webkit.launch();
+  const browser = await chromium.launch();
   const context = await browser.newContext({ ignoreHTTPSErrors: true });
   const page = await context.newPage();
 
