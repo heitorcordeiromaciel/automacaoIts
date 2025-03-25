@@ -36,7 +36,7 @@ const tirarRelatorio = async () => {
     const download = await page.waitForEvent('download');
     const suggestedFilename = download.suggestedFilename();
     const safeFilename = path.basename(suggestedFilename, path.extname(suggestedFilename)) + '.csv';
-    const savePath = path.join('./reports', safeFilename);
+    const savePath = path.join('./apis/reports', safeFilename);
 
     await download.saveAs(savePath);
     console.log(`Arquivo salvo em: ${savePath}`);
