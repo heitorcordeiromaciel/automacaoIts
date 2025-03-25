@@ -7,6 +7,7 @@
 - Script para verificar links de internet nos pfSenses
 - Script para reiniciar tronco na FIESC
 - Script para reconectar VPN de Blumenau automaticamente baseado em horario
+- API para coletar informações para o Dashboard de links, reiniciar a VPN de Blumenau com GET e aplicar campanha para todos os operadores com GET
 
 _Obrigado Gabriel pelo codigo original do voicemail, 31, links pFsenses e VPN Blumenau_
 # Executaveis
