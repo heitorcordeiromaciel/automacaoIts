@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const { restartVpn } = require('./vpnBlumenau');
 const { linksti } = require('./linksTi');
 const { addCampaign } = require('./addCampaign');
@@ -35,18 +36,31 @@ app.get('/run-report', async (req, res) => {
 });
 
 app.get('/download-report', async (req, res) => {
-  if (!latestFilename) {
-      try {
-          latestFilename = await tirarRelatorio();
-      } catch (error) {
-          return res.status(500).send('Error generating report: ' + error.message);
-      }
+  let latestFilename;
+  try {
+      latestFilename = await tirarRelatorio();
+  } catch (error) {
+      return res.status(500).send('Error generating report: ' + error.message);
   }
 
   const reportPath = path.join(__dirname, 'reports', latestFilename);
-  res.download(reportPath, latestFilename, (err) => {
+  console.log('Generated report at: ', reportPath);
+
+  if (!fs.existsSync(reportPath)) {
+      return res.status(404).send('Report file not found.');
+  }
+
+  res.download(reportPath, latestFilename, async (err) => {
       if (err) {
           return res.status(500).send('Error downloading the file: ' + err.message);
+      }
+
+      try {
+          console.log(`Deleting file: ${reportPath}`);
+          await fs.promises.unlink(reportPath);
+          console.log('File deleted successfully');
+      } catch (deleteErr) {
+          console.error('Error deleting file:', deleteErr);
       }
   });
 });
