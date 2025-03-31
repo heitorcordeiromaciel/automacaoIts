@@ -22,7 +22,7 @@ async function restartVpn() {
 
         page.on('dialog', dialog => dialog.accept());
 
-        const rowLocator = page.locator(`tbody#ipsec-body tr:has(td:nth-child(2):text("SERASA-ALGAR"))`);
+        const rowLocator = page.locator(`tbody#ipsec-body tr:has(td:nth-child(2):text("BLUMENAU"))`);
         await rowLocator.locator('a[title="Disconnect P1"]').click();
         console.log('VPN Reiniciada');
 
@@ -37,5 +37,5 @@ async function restartVpn() {
         return { success: false, message: "Erro ao executar o script" };
     }
 }
-
+restartVpn();
 module.exports.restartVpn = restartVpn

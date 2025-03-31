@@ -115,7 +115,7 @@ function linksti() {
 
   setInterval(() => {
     runPlaywrightScript();
-  }, 2 * 60 * 60 * 1000);
+  }, 1 * 60 * 60 * 1000);
 }
 
 module.exports.linksti = linksti

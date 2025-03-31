@@ -8,8 +8,8 @@ const addCampaign = async () => {
 
         await page.goto('https://serasa.itscs.com.br/suite/');
 
-        await page.getByPlaceholder('Usuário').fill('julio.bueno');
-        await page.getByPlaceholder('Senha').fill('Itscs@135');
+        await page.locator('input[placeholder="Usuário"]').fill('julio.bueno');
+        await page.locator('input[placeholder="Senha"]').fill('Itscs@135');
         await page.locator('#login').click();
         await page.waitForTimeout(1000);
 
@@ -24,8 +24,10 @@ const addCampaign = async () => {
         await page.waitForTimeout(500);
 
         await browser.close();
-    } catch (e) {
-        throw e;
+        return { success: true, message: "Script executado com sucesso" };
+    } catch (error) {
+        console.error("Erro na execução do script:", error);
+        return { success: false, message: "Erro ao executar o script" };
     }
 }
 
