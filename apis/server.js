@@ -7,6 +7,8 @@ const { addCampaign } = require('./addCampaign');
 const { tirarRelatorio } = require('./relatorioPausas');
 const { restartFiesc } = require('./troncoFiesc');
 const { runBackup } = require('./pfsenses');
+const { clearVoicemail } = require('./clearVoicemail');
+const { clear } = require('console');
 
 const app = express();
 const port = 80;
@@ -35,6 +37,11 @@ app.get('/restart-fiesc', async (req, res) => {
 
 app.get('/backup-pfsense', async (req, res) => {
   const result = await runBackup();
+  res.json(result);
+})
+
+app.get('/clear-voicemail', async (req, res) => {
+  const result = await clearVoicemail();
   res.json(result);
 })
 
