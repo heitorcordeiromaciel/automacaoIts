@@ -1,9 +1,9 @@
-const { webkit } = require('playwright');
+const { chromium } = require('playwright');
 
 async function restartVpn() {
     try {
         console.log("Iniciando aplicação...");
-        const browser = await webkit.launch();
+        const browser = await chromium.launch();
         const context = await browser.newContext({ ignoreHTTPSErrors: true });
         const page = await context.newPage();
 
@@ -22,9 +22,20 @@ async function restartVpn() {
 
         page.on('dialog', dialog => dialog.accept());
 
-        const rowLocator = page.locator(`tbody#ipsec-body tr:has(td:nth-child(2):text("BLUMENAU"))`);
-        await rowLocator.locator('a[title="Disconnect P1"]').click();
-        console.log('VPN Reiniciada');
+        const rowLocators = page.locator(`tbody#ipsec-body tr:has(td:nth-child(2):text("BLUMENAU"))`);
+
+        const rowCount = await rowLocators.count();
+
+        if (rowCount === 0) {
+            console.log('Nenhuma conexão VPN encontrada para BLUMENAU.');
+        } else {
+            console.log(`Encontradas ${rowCount} conexões VPN para BLUMENAU. Reiniciando...`);
+            for (let i = 0; i < rowCount; i++) {
+                await rowLocators.nth(i).locator('a[title="Disconnect P1"]').click();
+                console.log(`Desconectado P1 da instância ${i + 1}`);
+                await page.waitForTimeout(500);
+            }
+        }
 
         console.log('Finalizando tarefas...');
         await context.close();
