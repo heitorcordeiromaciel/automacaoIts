@@ -56,8 +56,8 @@ body {
 }
 
 .unknown {
-    background-color: #ffc107;
-    color: black;
+    background-color: #dc3545;
+    color: white;
 }
 
 .status-container {

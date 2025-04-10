@@ -38,84 +38,88 @@ const dados = [
   },
 ];
 
-async function runPlaywrightScript() {
+const username = 'julio';
+const password = 'imperatriz@135';
+const gatewayStatus = [];
+
+async function monitorGateways() {
   const browser = await chromium.launch();
   const context = await browser.newContext({ ignoreHTTPSErrors: true });
-  const page = await context.newPage();
-
-  const result = [];
 
   for (const dado of dados) {
-    console.log(colors.cyan(dado.pfsense));
+    const page = await context.newPage();
+    const pfsenseData = {
+      pfsense: dado.pfsense,
+      gateways: []
+    };
+    gatewayStatus.push(pfsenseData);
 
     try {
+      console.log(colors.cyan(`Connecting to ${dado.pfsense}`));
       await page.goto(dado.url);
-    } catch (error) {
-      console.log(colors.red('PFSENSE OFFLINE'));
-      continue;
+
+      await page.getByPlaceholder('Username').fill(username);
+      await page.getByPlaceholder('Password').fill(password);
+      await page.locator('input[name="login"]').click();
+      await page.waitForTimeout(2000); 
+
+      setInterval(async () => {
+        const updatedGateways = await fetchGatewayStatus(page, dado.pfsense);
+        const index = gatewayStatus.findIndex(g => g.pfsense === dado.pfsense);
+        if (index !== -1) {
+          gatewayStatus[index].gateways = updatedGateways;
+        }
+
+        fs.writeFileSync('gateway_status.json', JSON.stringify(gatewayStatus, null, 2));
+        console.log(colors.green(`Updated ${dado.pfsense}`));
+
+      }, 30 * 1000);
+
+    } catch (err) {
+      console.log(colors.red(`Failed to connect to ${dado.pfsense}: ${err.message}`));
     }
-
-    await page.getByPlaceholder('Username').fill('julio');
-    await page.getByPlaceholder('Password').fill('imperatriz@135');
-    await page.locator('input[name="login"]').click();
-
-    await page.waitForTimeout(2000);
-    await checkStatus(page, result, dado.pfsense);
   }
-
-  await browser.close();
-
-  fs.writeFileSync('gateway_status.json', JSON.stringify(result, null, 2));
-
-  console.log('Updated gateway_status.json');
 }
 
-async function checkStatus(page, result, pfsenseName) {
+async function fetchGatewayStatus(page, pfsenseName) {
   for (let i = 0; i < 5; i++) {
     const rows = await page.$$(`#gateways-${i}-gwtblbody > tr`);
-
     if (rows.length > 0) {
-      const pfsenseData = {
-        pfsense: pfsenseName,
-        gateways: []
-      };
+      const gateways = [];
 
-      for (let row of rows) {
+      for (const row of rows) {
         try {
           const linkName = await row.$eval('td[title=""], td[title="Default gateway"]', el => el.innerText.trim());
 
           const onlineStatus = await row.$('.bg-success');
           if (onlineStatus) {
             const statusText = await onlineStatus.innerText();
-            pfsenseData.gateways.push({ gateway: linkName, status: statusText.toUpperCase() });
+            gateways.push({ gateway: linkName, status: statusText.toUpperCase() });
             continue;
           }
 
           const statusElement = await row.$("td[class^='bg-']");
           if (statusElement) {
             const statusText = await statusElement.innerText();
-            pfsenseData.gateways.push({ gateway: linkName, status: statusText.toUpperCase() });
+            gateways.push({ gateway: linkName, status: statusText.toUpperCase() });
           } else {
-            pfsenseData.gateways.push({ gateway: linkName, status: "UNKNOWN STATUS" });
+            gateways.push({ gateway: linkName, status: "UNKNOWN STATUS" });
           }
-
         } catch (error) {
-          console.log("Error checking a gateway row:", error);
+          console.log(colors.yellow(`Error reading gateway row in ${pfsenseName}: ${error.message}`));
         }
       }
 
-      result.push(pfsenseData); 
-      break;
+      return gateways;
     }
   }
+
+  return [];
 }
 
 function linksti() {
-  runPlaywrightScript();
-
-  setInterval(() => {
-    runPlaywrightScript();
-  }, 1 * 30 * 60 * 1000);
+  monitorGateways();
 }
+
 
 module.exports.linksti = linksti
