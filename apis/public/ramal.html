@@ -80,7 +80,7 @@
 				logStream.onmessage = function (event) {
 					ramaisList.textContent = event.data;
 				};
-				// ramaisList.innerHTML = '<li style="color:#ccc;">Carregando ramais...</li>';
+
 				ramaisContainer.style.display = 'block';
 				ramalControls.style.display = 'none';
 
@@ -102,7 +102,7 @@
 						ramalControls.style.display = 'block';
 					} else {
 						ramaisList.innerHTML = `<li>${data.message}</li>`;
-					}
+					};
 				} catch (err) {
 					ramaisList.innerHTML = `<li>Erro ao buscar ramais</li>`;
 				}
@@ -123,7 +123,7 @@
 					statusMessage.textContent = "❌ Ocorreu um erro ao receber ramais";
 					createButton.disabled = false;
 					return;
-				}
+				};
 
 				try {
 					const resposta = await fetch('/api/criar-ramal', {
@@ -144,8 +144,8 @@
 					statusMessage.textContent = "❌ Erro ao criar ramais (exceção).";
 				} finally {
 					createButton.disabled = false;
-				}
-			}
+				};
+			};
 
 			async function atualizarRamais(ip) {
 				try {
@@ -166,11 +166,11 @@
 						ramalControls.style.display = 'block';
 					} else {
 						ramaisList.innerHTML = `<li>${data.message}</li>`;
-					}
+					};
 				} catch (err) {
 					ramaisList.innerHTML = `<li>Erro ao atualizar ramais</li>`;
-				}
-			}
+				};
+			};
 		</script>
 
 		<div id="ramalResult" style="margin-top: 20px; font-weight: bold;"></div>

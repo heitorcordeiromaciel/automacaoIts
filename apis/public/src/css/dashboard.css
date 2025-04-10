@@ -1,104 +1,104 @@
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom, #2c3e50, #34495e);
-    color: white;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 20px;
-    font-family: 'Roboto', sans-serif;
-    overflow-y: hidden;
-    padding-top: 70px;
+	font-family: Arial, sans-serif;
+	background: linear-gradient(to bottom, #2c3e50, #34495e);
+	color: white;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	padding: 20px;
+	font-family: 'Roboto', sans-serif;
+	overflow-y: hidden;
+	padding-top: 70px;
 }
 
 .pfsense-card {
-    background-color: #34495e;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    margin: 10px;
-    padding: 20px;
-    width: 300px;
+	background-color: #34495e;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+	margin: 10px;
+	padding: 20px;
+	width: 300px;
 }
 
 .pfsense-title {
-    font-size: 1.5rem;
-    color: #e67e22;
-    margin-bottom: 10px;
-    text-align: center;
-    font-weight: bold;
+	font-size: 1.5rem;
+	color: #e67e22;
+	margin-bottom: 10px;
+	text-align: center;
+	font-weight: bold;
 }
 
 .dashboard-title {
-    font-size: 2rem;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #e67e22;
-    font-weight: bold;
+	font-size: 2rem;
+	text-align: center;
+	margin-bottom: 20px;
+	color: #e67e22;
+	font-weight: bold;
 }
 
 .gateway-status {
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 1rem;
-    text-align: center;
-    transition: background-color 0.3s ease-in-out;
+	margin: 10px 0;
+	padding: 10px;
+	border-radius: 5px;
+	font-size: 1rem;
+	text-align: center;
+	transition: background-color 0.3s ease-in-out;
 }
 
 .online {
-    background-color: #28a745;
-    color: white;
+	background-color: #28a745;
+	color: white;
 }
 
 .offline {
-    background-color: #dc3545;
-    color: white;
+	background-color: #dc3545;
+	color: white;
 }
 
 .unknown {
-    background-color: #dc3545;
-    color: white;
+	background-color: #dc3545;
+	color: white;
 }
 
 .status-container {
-    margin-top: 15px;
+	margin-top: 15px;
 }
 
 header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #34495e;
-    color: #e67e22;
-    padding: 15px;
-    text-align: center;
-    font-size: 1.25rem;
-    z-index: 9999;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background-color: #34495e;
+	color: #e67e22;
+	padding: 15px;
+	text-align: center;
+	font-size: 1.25rem;
+	z-index: 9999;
 }
 
 .back-button {
-    float: left;
-    padding: 10px 20px;
-    background-color: #007acc;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+	float: left;
+	padding: 10px 20px;
+	background-color: #007acc;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
 }
 
 .back-button:hover {
-    background-color: #005fa3;
+	background-color: #005fa3;
 }
 
 @media (max-width: 768px) {
-    .pfsense-card {
-        width: 45%;
-    }
+	.pfsense-card {
+		width: 45%;
+	}
 }
 
 @media (max-width: 480px) {
-    .pfsense-card {
-        width: 100%;
-    }
+	.pfsense-card {
+		width: 100%;
+	}
 }

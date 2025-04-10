@@ -23,101 +23,101 @@ app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'main.html'));
+	res.sendFile(path.join(__dirname, 'public', 'main.html'));
 });
 
 app.get('/dashboard', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+	res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
 app.get('/ramal', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'ramal.html'));
+	res.sendFile(path.join(__dirname, 'public', 'ramal.html'));
 });
 
 app.get('/gateway_status', (req, res) => {
-  res.sendFile(__dirname + '/gateway_status.json');
+	res.sendFile(__dirname + '/gateway_status.json');
 });
 
 app.get('/restart-vpn', async (req, res) => {
-  const result = await restartVpn();
-  res.json(result);
+	const result = await restartVpn();
+	res.json(result);
 });
 
 app.get('/add-campaign', async (req, res) => {
-  const result = await addCampaign();
-  res.json(result);
+	const result = await addCampaign();
+	res.json(result);
 })
 
 app.get('/restart-fiesc', async (req, res) => {
-  const result = await restartFiesc();
-  res.json(result);
+	const result = await restartFiesc();
+	res.json(result);
 })
 
 app.get('/clear-voicemail', async (req, res) => {
-  const result = await clearVoicemail();
-  res.json(result);
+	const result = await clearVoicemail();
+	res.json(result);
 })
 
 app.get('/run-report', async (req, res) => {
-  try {
-      latestFilename = await tirarRelatorio();
-      res.send(`Report generated successfully! Filename: ${latestFilename}`);
-  } catch (error) {
-      res.status(500).send('Error generating report: ' + error.message);
-  }
+	try {
+		latestFilename = await tirarRelatorio();
+		res.send(`Report generated successfully! Filename: ${latestFilename}`);
+	} catch (error) {
+		res.status(500).send('Error generating report: ' + error.message);
+	}
 });
 
 app.get('/download-report', async (req, res) => {
-  let latestFilename;
-  try {
-      latestFilename = await tirarRelatorio();
-  } catch (error) {
-      return res.status(500).send('Error generating report: ' + error.message);
-  }
+	let latestFilename;
+	try {
+		latestFilename = await tirarRelatorio();
+	} catch (error) {
+		return res.status(500).send('Error generating report: ' + error.message);
+	}
 
-  const reportPath = path.join(__dirname, 'reports', latestFilename);
-  console.log('Generated report at: ', reportPath);
+	const reportPath = path.join(__dirname, 'reports', latestFilename);
+	console.log('Generated report at: ', reportPath);
 
-  if (!fs.existsSync(reportPath)) {
-      return res.status(404).send('Report file not found.');
-  }
+	if (!fs.existsSync(reportPath)) {
+		return res.status(404).send('Report file not found.');
+	}
 
-  res.download(reportPath, latestFilename, async (err) => {
-      if (err) {
-          return res.status(500).send('Error downloading the file: ' + err.message);
-      }
+	res.download(reportPath, latestFilename, async (err) => {
+		if (err) {
+			return res.status(500).send('Error downloading the file: ' + err.message);
+		}
 
-      try {
-          console.log(`Deleting file: ${reportPath}`);
-          await fs.promises.unlink(reportPath);
-          console.log('File deleted successfully');
-      } catch (deleteErr) {
-          console.error('Error deleting file:', deleteErr);
-      }
-  });
+		try {
+			console.log(`Deleting file: ${reportPath}`);
+			await fs.promises.unlink(reportPath);
+			console.log('File deleted successfully');
+		} catch (deleteErr) {
+			console.error('Error deleting file:', deleteErr);
+		}
+	});
 });
 
 app.post('/api/ramais', async (req, res) => {
-  const { ip, username, password } = req.body;
-  console.log("Requisição recebida com:", req.body);
-  try {
-    const ramais = await getLastRamal(ip, username, password);
-    res.json({ success: true, ramais });
-  } catch (err) {
-    res.status(500).json({ success: false, message: "Erro ao buscar ramal." });
-  }
+	const { ip, username, password } = req.body;
+	console.log("Requisição recebida com:", req.body);
+	try {
+		const ramais = await getLastRamal(ip, username, password);
+		res.json({ success: true, ramais });
+	} catch (err) {
+		res.status(500).json({ success: false, message: "Erro ao buscar ramal." });
+	}
 });
 
 app.post('/api/criar-ramal', async (req, res) => {
-  const { issabel, ramalStart, ramalEnd } = req.body;
-  console.log("Requisição recebida com:", req.body);
-  try {
-    const { success, message } = await criaRamal(issabel, ramalStart, ramalEnd);
-    return res.json({ success, message });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({ success: false, message: `${err}`});
-  }
+	const { issabel, ramalStart, ramalEnd } = req.body;
+	console.log("Requisição recebida com:", req.body);
+	try {
+		const { success, message } = await criaRamal(issabel, ramalStart, ramalEnd);
+		return res.json({ success, message });
+	} catch (err) {
+		console.log(err);
+		return res.status(500).json({ success: false, message: `${err}` });
+	}
 });
 
 app.get('/logs', (req, res) => {
@@ -130,9 +130,9 @@ app.get('/logs', (req, res) => {
 });
 
 app.listen(port, ip, () => {
-  console.log(`Servidor rodando em http://${ip}:${port}`);
-  console.log(`Chame http://${ip}:${port}/restart-vpn para reiniciar a vpn de Blumenau`);
-  console.log(`Chame http://${ip}:${port}/add-campaign para adicionar campanha para todos os operadores`);
-  console.log(`Chame http://${ip}:${port}/download-report para extrair o relatório de pausas`);
-  linksti();
+	console.log(`Servidor rodando em http://${ip}:${port}`);
+	console.log(`Chame http://${ip}:${port}/restart-vpn para reiniciar a vpn de Blumenau`);
+	console.log(`Chame http://${ip}:${port}/add-campaign para adicionar campanha para todos os operadores`);
+	console.log(`Chame http://${ip}:${port}/download-report para extrair o relatório de pausas`);
+	linksti();
 });
