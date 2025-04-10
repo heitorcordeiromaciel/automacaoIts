@@ -15,7 +15,7 @@ const { clear } = require('console');
 const app = express();
 const router = express.Router();
 const port = 80;
-const ip = '192.168.1.170';
+const ip = '';
 let latestFilename = '';
 
 app.use(express.json());
