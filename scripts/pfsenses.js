@@ -1,7 +1,8 @@
 const { run } = require('node:test');
 const { webkit } = require('playwright');
 
-const runBackup = async () => {
+
+(async () => {
     try {
         console.log("Iniciando aplicação...");
         const dataOntem = new Date();
@@ -51,6 +52,4 @@ const runBackup = async () => {
         console.error("Erro na execução do script:", error);
         return { success: false, message: "Erro ao executar o script" };
     }
-}
-
-module.exports.runBackup = runBackup;
+})()
