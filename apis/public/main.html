@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel de Ações</title>
+  <link rel="stylesheet" href="/src/css/main.css">
+  <link rel="icon" href="/src/css/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+  <h1>Bem-vindo</h1>
+
+  <button onclick="window.location.href='/ramal'">Criador de Ramais</button>
+  <button onclick="window.location.href='/dashboard'">Ir para Dashboard</button>
+
+  <div>
+    <h2>Escolha uma Ação:</h2>
+    <select id="actionSelect">
+      <option value="">-- Selecione uma opção --</option>
+      <option value="cadastro-callback">Cadastro de Callback</option>
+      <option value="add-campaign">Adicionar Campanha Serasa</option>
+      <option value="restart-fiesc">Reiniciar FIESC</option>
+      <option value="restart-vpn">Reiniciar Blumenau</option>
+      <option value="clear-voicemail">Limpar Voicemail Prodemge</option>
+    </select>
+    <br />
+    <button onclick="handleAction()">Executar Ação</button>
+  </div>
+
+  <div id="resultBox" style="display:none;"></div>
+
+  <script>
+    async function handleAction() {
+      const value = document.getElementById('actionSelect').value;
+      const resultBox = document.getElementById('resultBox');
+      const logStream = new EventSource('/logs');
+
+      logStream.onmessage = function (event) {
+					resultBox.textContent = event.data;
+				};
+
+      if (!value) {
+        alert('Por favor, selecione uma ação.');
+        return;
+      }
+
+      resultBox.style.display = 'block';
+      resultBox.innerText = '⏳ Executando...';
+
+      if (value === 'cadastro-callback') {
+        resultBox.innerText = 'Modulo não implementado ainda';
+        return;
+      }
+
+      try {
+        const res = await fetch(`/${value}`, { method: 'GET' });
+        const contentType = res.headers.get("content-type");
+
+        let resultText;
+        if (res.ok) {
+          if (contentType && contentType.includes("application/json")) {
+            const data = await res.json();
+            resultText = JSON.stringify(data.message, null, 2);
+          } else {
+            resultText = await res.text();
+          }
+        } else {
+          resultText = `Erro ${res.status}: ${await res.text()}`;
+        }
+
+        resultBox.innerText = resultText;
+      } catch (err) {
+        resultBox.innerText = 'Erro na requisição: ' + err.message;
+      }
+    }
+  </script>
+</body>
+
+</html>
