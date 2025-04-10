@@ -22,11 +22,7 @@ const getLastRamal = async (issabelIP) => {
 
     logger.log('Logado com sucesso!');
 
-<<<<<<< HEAD
     if ((issabelIP !== '192.168.1.60') && (issabelIP !== '10.70.40.250')) {
-=======
-    if ((issabel !== '192.168.1.60') && (issabel !== '10.70.40.250')) {
->>>>>>> f66ee8dab8d2f3dea7631b60832b0a42a6015cb1
       try {
         await page.locator('.neo-modal-issabel-popup-close').click();
         logger.log('popup fechado');
