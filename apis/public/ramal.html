@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Criador de Ramal</title>
+	<link rel="stylesheet" href="/src/css/ramal.css">
+	<link rel="icon" href="/src/css/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+	<header>
+		<div class="header-left">
+			<button onclick="window.location.href='/'" class="back-button">⬅ Voltar</button>
+		</div>
+		<div class="header-center">
+			<h1>Gerenciador de Ramais</h1>
+		</div>
+		<div class="header-right"></div>
+	</header>
+	<div class="page-wrapper">
+		<div class="left-section">
+			<div class="form-container">
+				<h2>Criador de Ramal</h2>
+				<label for="issabelSelect">Escolha o Issabel:</label>
+				<select id="issabelSelect">
+					<option value="">Selecione uma opção</option>
+					<option value="192.168.1.76">TI</option>
+					<option value="192.168.1.59">FIESC</option>
+					<option value="192.168.1.60">PSP</option>
+					<option value="192.168.1.10">SCGas</option>
+					<option value="10.100.20.250">JPESSOA</option>
+					<option value="10.100.20.249">BADESC</option>
+					<option value="10.100.20.248">CRO</option>
+					<option value="10.100.20.247">IPREVILLE</option>
+					<option value="10.70.20.250">SANTOS</option>
+					<option value="10.70.40.250">PRODEMGE</option>
+					<option value="10.70.50.80">ARTESP</option>
+					<option value="10.70.50.60">ARSESP</option>
+					<option value="10.70.50.252">CAGECE 02</option>
+					<option value="10.70.50.254">CAGECE 04</option>
+					<option value="192.168.10.250">SANASA</option>
+					<option value="10.10.35.17">CEDAE SAC</option>
+					<option value="10.10.35.18">CEDAE OUV</option>
+				</select>
+			</div>
+
+			<div class="form-container" id="ramalControls" style="display: none;">
+				<label for="startRange">Ramal inicial:</label>
+				<input type="number" id="startRange" placeholder="Ex: 1000" min="0" />
+
+				<label for="endRange">Ramal final:</label>
+				<input type="number" id="endRange" placeholder="Ex: 1010" min="0" />
+
+				<button onclick="criarRamais()" id="createButton">Criar Ramais</button>
+
+				<p id="statusMessage" style="margin-top: 15px;"></p>
+			</div>
+		</div>
+
+		<div id="ramaisContainer">
+			<h3>Ramais Existentes</h3>
+			<ul id="ramaisList"></ul>
+		</div>
+
+		<script>
+			const dropdown = document.getElementById('issabelSelect');
+			const ramaisList = document.getElementById('ramaisList');
+			const ramaisContainer = document.getElementById('ramaisContainer');
+			const ramalControls = document.getElementById('ramalControls');
+			const statusMessage = document.getElementById('statusMessage');
+			const createButton = document.getElementById('createButton');
+			const logStream = new EventSource('/logs');
+
+			dropdown.addEventListener('change', async () => {
+				const ip = dropdown.value;
+				if (!ip) return;
+
+				logStream.onmessage = function (event) {
+					ramaisList.textContent = event.data;
+				};
+				// ramaisList.innerHTML = '<li style="color:#ccc;">Carregando ramais...</li>';
+				ramaisContainer.style.display = 'block';
+				ramalControls.style.display = 'none';
+
+				try {
+					const response = await fetch('/api/ramais', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ ip })
+					});
+					const data = await response.json();
+
+					if (data.success) {
+						ramaisList.innerHTML = '';
+						data.ramais.sort((a, b) => a - b).forEach(ramal => {
+							const li = document.createElement('li');
+							li.textContent = ramal;
+							ramaisList.appendChild(li);
+						});
+						ramalControls.style.display = 'block';
+					} else {
+						ramaisList.innerHTML = `<li>${data.message}</li>`;
+					}
+				} catch (err) {
+					ramaisList.innerHTML = `<li>Erro ao buscar ramais</li>`;
+				}
+			});
+
+			async function criarRamais() {
+				const issabel = dropdown.value;
+				const ramalStart = document.getElementById('startRange').value;
+				const ramalEnd = document.getElementById('endRange').value;
+
+				logStream.onmessage = function (event) {
+					statusMessage.textContent = event.data;
+				};
+
+				createButton.disabled = true;
+
+				if (!ramalStart || !ramalEnd) {
+					statusMessage.textContent = "❌ Ocorreu um erro ao receber ramais";
+					createButton.disabled = false;
+					return;
+				}
+
+				try {
+					const resposta = await fetch('/api/criar-ramal', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ issabel, ramalStart, ramalEnd })
+					});
+
+					const data = await resposta.json();
+
+					if (data.success) {
+						await atualizarRamais(issabel);
+						statusMessage.textContent = "✅ Ramais criados com sucesso!";
+					} else {
+						statusMessage.textContent = "❌ Erro ao criar ramais.";
+					}
+				} catch (err) {
+					statusMessage.textContent = "❌ Erro ao criar ramais (exceção).";
+				} finally {
+					createButton.disabled = false;
+				}
+			}
+
+			async function atualizarRamais(ip) {
+				try {
+					const response = await fetch('/api/ramais', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ ip })
+					});
+					const data = await response.json();
+
+					if (data.success) {
+						ramaisList.innerHTML = '';
+						data.ramais.sort((a, b) => a - b).forEach(ramal => {
+							const li = document.createElement('li');
+							li.textContent = ramal;
+							ramaisList.appendChild(li);
+						});
+						ramalControls.style.display = 'block';
+					} else {
+						ramaisList.innerHTML = `<li>${data.message}</li>`;
+					}
+				} catch (err) {
+					ramaisList.innerHTML = `<li>Erro ao atualizar ramais</li>`;
+				}
+			}
+		</script>
+
+		<div id="ramalResult" style="margin-top: 20px; font-weight: bold;"></div>
+</body>
+
+</html>

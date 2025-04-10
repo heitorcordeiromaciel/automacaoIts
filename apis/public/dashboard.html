@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gateway Status Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/css/dashboard.css">
+  <link rel="icon" href="/src/css/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+  <header>
+    <button onclick="window.location.href='/'" class="back-button">⬅ Voltar</button>
+    <strong>Gateway Status Dashboard</strong>
+  </header>
+  <div id="statusContainer" style="width: 100%; display: flex; flex-wrap: wrap; justify-content: space-around;"></div>
+
+  <script>
+    async function fetchGatewayStatus() {
+      const response = await fetch('/gateway_status');
+      const data = await response.json();
+      const statusContainer = document.getElementById('statusContainer');
+
+      statusContainer.innerHTML = '';
+
+      data.forEach(pfsenseData => {
+        const pfsenseCard = document.createElement('div');
+        pfsenseCard.classList.add('pfsense-card');
+
+        const pfsenseTitle = document.createElement('div');
+        pfsenseTitle.classList.add('pfsense-title');
+        pfsenseTitle.innerText = pfsenseData.pfsense;
+
+        const gatewaysContainer = document.createElement('div');
+        gatewaysContainer.classList.add('status-container');
+
+        pfsenseData.gateways.forEach(gateway => {
+          const statusClass = gateway.status === 'ONLINE' ? 'online' :
+            gateway.status === 'OFFLINE' ? 'offline' : 'unknown';
+
+          const gatewayDiv = document.createElement('div');
+          gatewayDiv.classList.add('gateway-status', statusClass);
+          gatewayDiv.innerText = `${gateway.gateway}: ${gateway.status}`;
+
+          gatewaysContainer.appendChild(gatewayDiv);
+        });
+
+        pfsenseCard.appendChild(pfsenseTitle);
+        pfsenseCard.appendChild(gatewaysContainer);
+
+        statusContainer.appendChild(pfsenseCard);
+      });
+    }
+
+    setInterval(fetchGatewayStatus, 2000);
+    fetchGatewayStatus();
+  </script>
+</body>
+
+</html>
