@@ -6,13 +6,12 @@ const { linksti } = require('./linksTi');
 const { addCampaign } = require('./addCampaign');
 const { tirarRelatorio } = require('./relatorioPausas');
 const { restartFiesc } = require('./troncoFiesc');
-const { runBackup } = require('./pfsenses');
 const { clearVoicemail } = require('./clearVoicemail');
 const { clear } = require('console');
 
 const app = express();
 const port = 80;
-const ip = 'yourip';
+const ip = '192.168.1.170';
 let latestFilename = '';
 
 app.use(express.static('public'));
@@ -32,11 +31,6 @@ app.get('/add-campaign', async (req, res) => {
 
 app.get('/restart-fiesc', async (req, res) => {
   const result = await restartFiesc();
-  res.json(result);
-})
-
-app.get('/backup-pfsense', async (req, res) => {
-  const result = await runBackup();
   res.json(result);
 })
 
