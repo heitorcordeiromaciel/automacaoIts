@@ -102,7 +102,11 @@
       },
       {
         "gateway": "ALGAR_DEDICADO\n201.48.202.42 (1.1.1.1)",
+<<<<<<< HEAD
         "status": "ONLINE"
+=======
+        "status": "OFFLINE, PACKETLOSS"
+>>>>>>> f66ee8dab8d2f3dea7631b60832b0a42a6015cb1
       },
       {
         "gateway": "CAGECE\n10.70.11.2",
