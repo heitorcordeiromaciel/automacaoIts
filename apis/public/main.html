@@ -26,12 +26,27 @@
 			<option value="clear-voicemail">Limpar Voicemail Prodemge</option>
 		</select>
 		<br />
+		<p id="descriptionBox" style="margin-top: 10px; font-style: italic; color: #555;"></p>
 		<button onclick="handleAction()">Executar Ação</button>
 	</div>
 
 	<div id="resultBox" style="display:none;"></div>
 
 	<script>
+		const descriptions = {
+			"cadastro-callback": "Realiza a atribuição de ramais para os operadores.",
+			"add-campaign": "Readiciona a campanha para todos os operadores do SERASA",
+			"restart-fiesc": "Reinicia o tronco de ligações da operação FIESC, necessario para fazer troca de rotas.",
+			"restart-vpn": "Reinicia a conexão VPN com a unidade de Blumenau.",
+			"clear-voicemail": "Limpa todas as mensagens de voz da operação Prodemge."
+		};
+
+		document.getElementById('actionSelect').addEventListener('change', function () {
+			const value = this.value;
+			const descriptionBox = document.getElementById('descriptionBox');
+			descriptionBox.textContent = descriptions[value] || '';
+		});
+
 		async function handleAction() {
 			const value = document.getElementById('actionSelect').value;
 			const resultBox = document.getElementById('resultBox');

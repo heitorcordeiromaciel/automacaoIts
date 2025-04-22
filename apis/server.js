@@ -1,3 +1,4 @@
+require('dotenv').config({ path:'/.env' });
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -14,8 +15,8 @@ const { clear } = require('console');
 
 const app = express();
 const router = express.Router();
-const port = 80;
-const ip = '';
+const ip = process.env.SERVER_IP;
+const port = process.env.SERVER_PORT;
 let latestFilename = '';
 
 app.use(express.json());
@@ -80,7 +81,7 @@ app.get('/download-report', async (req, res) => {
 
 	if (!fs.existsSync(reportPath)) {
 		return res.status(404).send('Report file not found.');
-	}
+	};
 
 	res.download(reportPath, latestFilename, async (err) => {
 		if (err) {

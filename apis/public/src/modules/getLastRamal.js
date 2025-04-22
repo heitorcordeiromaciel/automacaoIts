@@ -1,5 +1,5 @@
 const { chromium } = require('playwright');
-const credentials = require('../credentials.json');
+const credentials = require('./../data/credentials.json');
 const logger = require('./../helpers/logger');
 
 const getLastRamal = async (issabelIP) => {
