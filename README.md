@@ -1,5 +1,5 @@
 # Compilado de scripts de automação para a equipe de TI da ITS (Agora com interface grafica)
-- Interface grafica hospedada [aqui!](http://192.168.1.65)
+- Interface grafica hospedada localmente na empresa
 - Criador de ramal automatico para PBX Issabel
 - Script de cadastro de callback automatico (_Beta_)
 - Script para limpar Voicemail Prodemge
@@ -10,7 +10,6 @@
 - Script para reconectar VPN de Blumenau automaticamente baseado em horario
 - API para coletar informações para o Dashboard de links, reiniciar a VPN de Blumenau com GET e aplicar campanha para todos os operadores com GET
 
-_Obrigado Gabriel pelo codigo original do voicemail, 31, links pFsenses e VPN Blumenau_
 # Executaveis
 
 `criadorDeRamal`, `pfsenses`, `clearVoicemail` e `troncoFiesc` possuem versões .exe que podem ser encontradas na pasta `exe`
